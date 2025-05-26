@@ -1,5 +1,5 @@
 
-# #문서작성하기
+# #문서작성하기 ----------------------------------------------
 # import streamlit as st
 
 # st.title("🎈 안녕하세요")
@@ -31,7 +31,7 @@
 # st.image("https://i.namu.wiki/i/4El7Omx8MUNbvgPh06rSi50cTR5HI9QF3x8KuRAibfxEj6z-3Yqo19bi7pFUwyo73MaFIyibjmyibkq3Z8yzuXfFpPZ4siVz_OjZhEsyDmlSc6sb4Bq5OFsqW28zfqBWKgg5pVqwTIt4tcB6vjVR_Q.webp", width=300)
 
 
-# #데이터 표현하기
+# #데이터 표현하기 ----------------------------------------------
 # import streamlit as st
 # st.set_page_config(page_title="문서 작성 예제", layout="centered")
 
@@ -50,7 +50,7 @@
 # })
 # st.dataframe(df)
 
-# #데이터 입력받기
+# #데이터 입력받기 ----------------------------------------------
 
 # #ex1)
 # import streamlit as st
@@ -97,7 +97,7 @@
 #         st.write("**소개글:**")
 #         st.info(description if description else "작성하지 않음")
 
-# #데이터 입력받기
+# #데이터 입력받기 ----------------------------------------------
 # #ex1)
 # import streamlit as st
 # import datetime
@@ -144,7 +144,8 @@
 #         st.info(description if description else "작성하지 않음")
 
 
-# #레이아웃 columns
+# #레이아웃 columns ----------------------------------------------
+
 # import streamlit as st
 
 # col1,col2 = st.columns([2,3])
@@ -166,7 +167,8 @@
 
 # #=>위에 with col2: 안의 내용과 같은 기능을합니다
 
-# #레이아웃 Tap
+# #레이아웃 Tap ----------------------------------------------
+
 # import streamlit as st
 
 # # 탭 생성 : 첫번째 탭의 이름은 Tab A 로, Tab B로 표시합니다. 
@@ -180,7 +182,7 @@
 #   #tab B를 누르면 표시될 내용 
 #   st.write('hi')
 
-# #레이아웃 sidebar
+# #레이아웃 sidebar ----------------------------------------------
 # import streamlit as st
 
 # #st.sidebar는 
@@ -189,7 +191,7 @@
 # st.sidebar.checkbox('체크박스에 표시될 문구')
 # # 사이드바에 체크박스, 버튼등 추가할 수 있습니다! 
 
-# #레이아웃 Expander
+# #레이아웃 Expander ----------------------------------------------
 # import streamlit as st
 
 # st.title("📂 Streamlit Expander 예제")
@@ -205,7 +207,7 @@
 # with st.expander("✍️ 메모 입력"):
 #     note = st.text_area("여기에 학습 내용을 메모하세요")
 
-# # 예제 3: 데이터프레임 숨기기
+# # 예제 3: 데이터프레임 숨기기 ----------------------------------------------
 
 # import pandas as pd
 
@@ -216,7 +218,7 @@
 # with st.expander("점수표 보기"):
 #     st.dataframe(df)
 
-# #레이아웃 Contatiner
+# #레이아웃 Contatiner ----------------------------------------------
 # import streamlit as st
 
 # st.title("📦 Streamlit Container 예제")
@@ -257,7 +259,7 @@
 #     st.subheader("3️⃣ 메모 작성")
 #     st.text_area("학습 또는 회의 메모를 입력하세요")
 
-# #레이아웃 Empty
+# #레이아웃 Empty ----------------------------------------------
 
 # import streamlit as st
 
@@ -269,39 +271,166 @@
 #     placeholder.warning("아직 버튼을 누르지 않았어요.")
 
 
-#레이아웃 작성 예제
+# #레이아웃 작성 예제
+# import streamlit as st
+
+# # --- 사이드바 (슬라이더) ---
+# st.sidebar.title("슬라이더")
+# slider_val = st.sidebar.slider("값 선택", 0, 2000, 1000)
+
+# # --- 탭 구성 ---
+# tab1, tab2, tab3 = st.tabs(["탭 01", "탭 02", "탭 03"])
+
+# with tab1:
+#     st.write("탭 01 내용")
+
+#     # 2x2 레이아웃 구성
+#     col1, col2,col5 = st.columns(3)
+#     with col1:
+#         st.markdown("### 🧱 레이아웃 01")
+#         st.info(f"슬라이더 값: {slider_val}")
+#     with col2:
+#         st.markdown("### 🧱 레이아웃 02")
+#         st.success("오른쪽 상단 영역")
+
+#     col3, col4, col6 = st.columns(3)
+#     with col3:
+#         st.markdown("### 🧱 레이아웃 03")
+#         st.warning("왼쪽 하단 영역")
+#     with col4:
+#         st.markdown("### 🧱 레이아웃 04")
+#         st.error("오른쪽 하단 영역")
+
+# with tab2:
+#     st.write("탭 02 내용")
+
+# with tab3:
+#     st.write("탭 03 내용")
+
+# #데이터 입력 받기 - select box -----------------------------------------
+# import streamlit as st
+# users = [{"id": 1, "name": "홍길동"}, {"id": 2, "name": "이몽룡"}]
+# selected_user = st.selectbox(
+#     "사용자 선택",
+#     users,
+#     format_func=lambda x: f"{x['name']} (ID: {x['id']})"
+# )
+# st.write("선택한 사용자 ID:", selected_user['id'])
+
+# # 데이터 입력 받기 - multi select -----------------------------------------
+# # ex1)
+# import streamlit as st
+
+# fruits = ["🍎 사과", "🍌 바나나", "🍇 포도", "🍑 복숭아"]
+
+# selected_fruits = st.multiselect("좋아하는 과일을 모두 선택하세요", fruits, default=["🍎 사과"])
+
+# st.write("당신이 선택한 과일:", selected_fruits)
+
+# #ex2)
+# import streamlit as st
+# import pandas as pd
+
+# # 예시용 간단한 데이터프레임 생성
+# data = {
+#     "행정구역": ["서울특별시", "부산광역시", "제주특별자치도", "서울특별시", "부산광역시"],
+#     "인구수": [9500000, 3400000, 670000, 9600000, 3450000],
+#     "연도": ["2024", "2024", "2024", "2025", "2025"]
+# }
+# df = pd.DataFrame(data)
+
+# # 멀티셀렉트: 유저가 선택할 지역 목록
+# 행정구역목록 = sorted(df["행정구역"].unique())
+
+# # 멀티셀렉트 위젯
+# selected_regions = st.multiselect(
+#     "분석할 지역을 선택하세요", 
+#     options=행정구역목록, 
+#     default=["서울특별시"]
+# )
+
+# # 선택된 지역에 따라 필터링
+# filtered_df = df[df["행정구역"].isin(selected_regions)]
+
+# # 결과 출력
+# st.write("선택된 지역 데이터:")
+# st.dataframe(filtered_df)
+
+# # 데이터 입력 받기 - radio -----------------------------------------
+# #ex1)
+# import streamlit as st
+
+# gender = st.radio("성별을 선택하세요", ["남자", "여자"])
+# st.write("선택한 성별:", gender)
+
+# #ex2)
+# import streamlit as st
+
+# color = st.radio(
+#     "좋아하는 색을 고르세요",
+#     options=["빨강", "파랑", "초록"],
+#     index=1  # 기본 선택은 "파랑"
+# )
+# st.success(f"선택한 색상: {color}")
+
+
+# # 데이터 입력 받기 - slider -----------------------------------------
+# # ex1)
+# import streamlit as st
+
+# age = st.slider("나이를 선택하세요", min_value=10, max_value=80, value=30, step=5)
+# st.write("선택한 나이:", age)
+
+# # ex2)
+# import streamlit as st
+# year_range = st.slider("연도 범위", min_value=2010, max_value=2025, value=(2015, 2023))
+# st.write("선택한 연도:", year_range)
+
+# # 그 외 데이터 입력 받기 -----------------------------------------------
+# # 한 줄 텍스트 text_input
+# import streamlit as st
+# name = st.text_input("이름을 입력하세요")
+# st.write("입력한 이름:", name)
+# # 여러줄 텍스트 text_area -----------------------------------------------
+# memo = st.text_area("메모를 입력하세요", height=150)
+# st.write("입력한 메모:", memo)
+# # 숫자 number_input -----------------------------------------------------
+# age = st.number_input("나이를 입력하세요", min_value=0, max_value=120, step=1)
+# st.write("입력한 나이:", age)
+# # 날짜 date_input
+# birthdate = st.date_input("생일을 선택하세요")
+# st.write("선택한 날짜:", birthdate)
+# # 표 형식 데이터 data_editor -----------------------------------------------
+# import pandas as pd
+
+# df = pd.DataFrame({
+#     "이름": ["홍길동", "김철수"],
+#     "나이": [30, 25]
+# })
+
+# edited_df = st.data_editor(df)
+# st.write("수정된 데이터:")
+# st.dataframe(edited_df)
+
+# # 파일 업로더 file_uploader ------------------------------------------------
+# uploaded_file = st.file_uploader("CSV 파일을 업로드하세요", type="csv")
+# if uploaded_file:
+#     df = pd.read_csv(uploaded_file)
+#     st.dataframe(df)
+
 import streamlit as st
+import plotly.express as px
+import pandas as pd
 
-# --- 사이드바 (슬라이더) ---
-st.sidebar.title("슬라이더")
-slider_val = st.sidebar.slider("값 선택", 0, 2000, 50)
+# 샘플 데이터
+df = pd.DataFrame({
+    "과일": ["사과", "바나나", "체리", "사과", "바나나", "체리"],
+    "판매량": [10, 15, 8, 12, 18, 6],
+    "지점": ["서울", "서울", "서울", "부산", "부산", "부산"]
+})
 
-# --- 탭 구성 ---
-tab1, tab2, tab3 = st.tabs(["탭 01", "탭 02", "탭 03"])
+# plotly 그래프 생성
+fig = px.bar(df, x="과일", y="판매량", color="지점", barmode="group", title="과일별 판매량")
 
-with tab1:
-    st.write("탭 01 내용")
-
-    # 2x2 레이아웃 구성
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("### 🧱 레이아웃 01")
-        st.info(f"슬라이더 값: {slider_val}")
-    with col2:
-        st.markdown("### 🧱 레이아웃 02")
-        st.success("오른쪽 상단 영역")
-
-    col3, col4 = st.columns(2)
-    with col3:
-        st.markdown("### 🧱 레이아웃 03")
-        st.warning("왼쪽 하단 영역")
-    with col4:
-        st.markdown("### 🧱 레이아웃 04")
-        st.error("오른쪽 하단 영역")
-
-with tab2:
-    st.write("탭 02 내용")
-
-with tab3:
-    st.write("탭 03 내용")
-
+# Streamlit에 출력
+st.plotly_chart(fig, use_container_width=True)
