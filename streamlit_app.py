@@ -436,51 +436,161 @@
 # # Streamlit에 출력
 # st.plotly_chart(fig, use_container_width=True)
 
-#map -------------------------------------------------------------
-# ex1) 
-# 열이름이 반드시 필요
-import streamlit as st
-import pandas as pd
+# #map -------------------------------------------------------------
+# # ex1) 
+# # 열이름이 반드시 필요
+# import streamlit as st
+# import pandas as pd
 
-# 서울 명소 위치
-data = pd.DataFrame({
-    'lat': [37.5665, 37.5700, 37.5796],
-    'lon': [126.9780, 126.9920, 126.9770],
-    'place': ['시청', '동대문', '경복궁']
-})
+# # 서울 명소 위치
+# data = pd.DataFrame({
+#     'lat': [37.5665, 37.5700, 37.5796],
+#     'lon': [126.9780, 126.9920, 126.9770],
+#     'place': ['시청', '동대문', '경복궁']
+# })
 
-st.map(data)
+# st.map(data)
 
-# ex2)
-import streamlit as st
-import pandas as pd
-import pydeck as pdk
+# # ex2)
+# import streamlit as st
+# import pandas as pd
+# import pydeck as pdk
 
-# 데이터 정의 (서울 주요 지점 예시)
-data = pd.DataFrame({
-    'lat': [37.5665, 37.5700, 37.5796],
-    'lon': [126.9780, 126.9920, 126.9770],
-    'place': ['시청', '동대문', '경복궁']
-})
+# # 데이터 정의 (서울 주요 지점 예시)
+# data = pd.DataFrame({
+#     'lat': [37.5665, 37.5700, 37.5796],
+#     'lon': [126.9780, 126.9920, 126.9770],
+#     'place': ['시청', '동대문', '경복궁']
+# })
 
-# pydeck으로 고급 지도 시각화
-st.pydeck_chart(pdk.Deck(
-    map_style='mapbox://styles/mapbox/light-v9',  # 지도 스타일
-    initial_view_state=pdk.ViewState(
-        latitude=37.5665,     # 초기 중심 위도
-        longitude=126.9780,   # 초기 중심 경도
-        zoom=11,              # 줌 레벨
-        pitch=45              # 기울기
-    ),
-    layers=[
-        pdk.Layer(
-            'ScatterplotLayer',
-            data=data,
-            get_position='[lon, lat]',  # 열 이름 주의!
-            get_color='[200, 30, 0, 160]',  # 빨간색 마커
-            get_radius=300,  # 반경
-            pickable=True,
-        )
-    ],
-    tooltip={"text": "{place}"}
-))
+# # pydeck으로 고급 지도 시각화
+# st.pydeck_chart(pdk.Deck(
+#     map_style='mapbox://styles/mapbox/light-v9',  # 지도 스타일
+#     initial_view_state=pdk.ViewState(
+#         latitude=37.5665,     # 초기 중심 위도
+#         longitude=126.9780,   # 초기 중심 경도
+#         zoom=11,              # 줌 레벨
+#         pitch=45              # 기울기
+#     ),
+#     layers=[
+#         pdk.Layer(
+#             'ScatterplotLayer',
+#             data=data,
+#             get_position='[lon, lat]',  # 열 이름 주의!
+#             get_color='[200, 30, 0, 160]',  # 빨간색 마커
+#             get_radius=300,  # 반경
+#             pickable=True,
+#         )
+#     ],
+#     tooltip={"text": "{place}"}
+# ))
+
+
+# # session_state --------------------------------------------------
+# import streamlit as st
+
+# # 초기값 설정
+# if 'count' not in st.session_state:
+#     st.session_state.count = 0
+
+# # 버튼 누르면 값 증가
+# if st.button("클릭하세요"):
+#     st.session_state.count += 1
+
+# # 출력
+# st.write("클릭한 횟수는 ", st.session_state.count, "번 입니다.")
+
+# # cache ----------------------------------------------------------
+
+# # @ cache_data 데이터 처리 중심 함수
+# # 파일 캐싱
+# import streamlit as st
+# import pandas as pd
+
+# @st.cache_data
+# def load_csv(file_path):
+#     df = pd.read_csv(file_path)
+#     return df
+
+# # 호출 시 처음만 읽고 이후 캐시
+# df = load_csv("my_data.csv")
+# st.dataframe(df)
+
+# #  API 요청 캐싱 
+# import streamlit as st
+# import time
+
+# @st.cache_data
+# def slow_function(x):
+#     time.sleep(3)  # 시간이 오래 걸리는 작업
+#     return x * 10
+
+# result = slow_function(5)
+# st.write("결과:", result)
+# # @cache_resource 무거운 객체를 한 번만 생성하고 재사용
+# # 머신러닝 캐싱
+# import streamlit as st
+# import joblib
+
+# @st.cache_resource
+# def load_model():
+#     return joblib.load("model.pkl")
+
+# model = load_model()
+# prediction = model.predict([[1, 2, 3]])
+# st.write(prediction)
+
+# # 데이터베이스 연결 유지
+# import streamlit as st
+# import sqlite3
+
+# @st.cache_resource
+# def get_connection():
+#     return sqlite3.connect("my_database.db")
+
+# conn = get_connection()
+# df = pd.read_sql("SELECT * FROM users", conn)
+# st.dataframe(df)
+
+# # proqress ------------------------------------------------------
+# import streamlit as st
+# import time
+
+# st.write("진행 중입니다...")
+
+# progress = st.progress(0)
+
+# for i in range(101):
+#     time.sleep(0.03)  # 작업 시뮬레이션
+#     progress.progress(i)
+
+# st.success("완료되었습니다!")
+
+# # spinner ----------------------------------------------------------
+# # ex1)
+# import streamlit as st
+# import time
+
+# st.write("데이터를 불러옵니다...")
+
+# with st.spinner("잠시만 기다려 주세요..."):
+#     time.sleep(5)  # 실제 작업 시뮬레이션
+
+# st.success("데이터 로딩 완료!")
+
+# # ex2)
+# import streamlit as st
+# import time
+
+# st.header("데이터 처리 진행 상황")
+
+# with st.spinner("전체 작업 진행 중..."):
+#     progress = st.progress(0)
+#     status_text = st.empty()  # 텍스트 덮어쓰기 용 공간 확보
+
+#     for i in range(5):
+#         status_text.write(f"🔧 Step {i+1}/5: 데이터 준비 중...")
+#         time.sleep(1)
+#         progress.progress((i + 1) * 20)
+
+# st.success("처리가 모두 끝났습니다!")
