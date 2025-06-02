@@ -1,3 +1,6 @@
 streamlit
 plotly
 pandas
+folium
+folium.plugins
+streamlit_folium

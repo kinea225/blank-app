@@ -579,20 +579,46 @@
 # st.success("데이터 로딩 완료!")
 
 # ex2)
+# import streamlit as st
+# import time
+
+# st.header("김태홍")
+
+# with st.spinner("전체 작업 진행 중..."):
+#     progress = st.progress(0)
+#     status_text = st.empty()  # 텍스트 덮어쓰기 용 공간 확보
+
+#     for i in range(5):
+#         status_text.write(f"🔧 Step {i+1}/5: 데이터 준비 중...")
+#         time.sleep(1)
+#         progress.progress((i + 1) * 20)
+
+# st.success("처리가 모두 끝났습니다!")
+
 import streamlit as st
-import time
+from streamlit_folium import folium_static
+import folium
+from folium.plugins import MarkerCluster
+import pandas as pd
 
-st.header("김태홍")
 
-with st.spinner("전체 작업 진행 중..."):
-    progress = st.progress(0)
-    status_text = st.empty()  # 텍스트 덮어쓰기 용 공간 확보
+st.title("진주시 CCTV 현황")
 
-    for i in range(5):
-        status_text.write(f"🔧 Step {i+1}/5: 데이터 준비 중...")
-        time.sleep(1)
-        progress.progress((i + 1) * 20)
+df = pd.read_csv("jinju_cctv_20250513.csv", encoding='euc-kr')
 
-st.success("처리가 모두 끝났습니다!")
+st.dataframe(df, height=200)
 
+df[["lat","lon"]] = df[["위도","경도"]]
+
+m = folium.Map(location=[35.1799817, 128.1076213], zoom_start=13)
+
+marker_cluster = MarkerCluster().add_to(m)
+
+for idx, row in df.iterrows():
+    folium.Marker(
+        location=[row["lat"], row["lon"]],
+        popup=row["설치장소"],
+    ).add_to(marker_cluster)
+
+folium_static(m)
 
